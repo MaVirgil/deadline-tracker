@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Life</title>
+  </head>
+  <body>
+    <!-- <header>
+    <h1>Your Life</h1>
+  </header> -->
+
+    <main>
+      <div class="date-picker">
+        <h2>Enter your date of birth:</h2>
+        <form id="date-input-form">
+          <input type="date" />
+          <button type="submit">Show my life</button>
+        </form>
+      </div>
+
+      <div id="calendar">
+        <h2 id="calendar-header">This is your life</h2>
+        <div id="calendar-container">
+
+        </div>
+      </div>
+    </main>
+  </body>
+  <script>
+    let dateOfBirth;
+
+    function handleDateInput(event) {
+      event.preventDefault();
+      dateOfBirth = event.target[0].valueAsDate;
+      console.log("date of birth: ", dateOfBirth);
+    }
+
+    function renderCalendar(startDate) {
+
+    }
+
+    const dateInputForm = document.getElementById("date-input-form");
+    dateInputForm.addEventListener("submit", handleDateInput);
+  </script>
+
+  <style>
+    html {
+      background-color: oklch(0.9496 0.0293 55.59);
+      color: oklch(24.935% 0.0225 41.943);
+      font-family: sans-serif;
+    }
+    body {
+      text-align: center;
+      margin: 0 auto;
+      width: 200px;
+    }
+    main {
+    }
+    .date-picker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 5em;
+      margin-bottom: 5em;
+    }
+    #calendar {
+    }
+  </style>
+</html>
