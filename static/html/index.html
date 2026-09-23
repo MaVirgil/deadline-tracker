@@ -3,68 +3,87 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Your Life</title>
+    <title>Deadline tracker</title>
   </head>
   <body>
-    <!-- <header>
-    <h1>Your Life</h1>
-  </header> -->
 
     <main>
-      <div class="date-picker">
-        <h2>Enter your date of birth:</h2>
-        <form id="date-input-form">
-          <input type="date" />
-          <button type="submit">Show my life</button>
+      <div class="date-picker-container">
+        <h3>To begin, enter a deadline that stresses you out:</h3>
+        <form id="date-input-form" >
+          <input type="datetime-local" required />
+          <input type="text" placeholder="Deadline name..." maxlength="20" required/>
+          <button type="submit">Submit</button>
         </form>
       </div>
 
-      <div id="calendar">
-        <h2 id="calendar-header">This is your life</h2>
-        <div id="calendar-container">
+      <div id="countdowns">
+        <h2 id="countdown-header"></h2>
+        <div id="countdown-container">
 
         </div>
       </div>
     </main>
   </body>
   <script>
-    let dateOfBirth;
+    const deadlineFormElement = document.getElementById('date-input-form');
+    deadlineFormElement.addEventListener("submit", handleDeadlineSubmit);
 
-    function handleDateInput(event) {
+    const deadline = {};
+
+    function handleDeadlineSubmit(event) {
       event.preventDefault();
-      dateOfBirth = event.target[0].valueAsDate;
-      console.log("date of birth: ", dateOfBirth);
+      deadline.dateTime = new Date(event.target[0].value);
+      deadline.text = event.target[1].value;
+      console.log(deadline);
+
+      if (deadline.dateTime.getTime() - Date.now() < 5 * 60 * 1000) {
+        alert('Please specify a deadline at least 5 minutes into the future');
+        return;
+      }
     }
 
-    function renderCalendar(startDate) {
-
-    }
-
-    const dateInputForm = document.getElementById("date-input-form");
-    dateInputForm.addEventListener("submit", handleDateInput);
   </script>
 
   <style>
     html {
-      background-color: oklch(0.9496 0.0293 55.59);
+      background-color: oklch(0.8798 0.0598 132.35);
       color: oklch(24.935% 0.0225 41.943);
       font-family: sans-serif;
     }
     body {
       text-align: center;
       margin: 0 auto;
-      width: 200px;
+      max-width: 650px;
+      min-height: 100vh;
+      background-color: rgba(248, 235, 227, 0.4);
+      background-blend-mode: overlay;
+      border-radius: 2em;
+    }
+    @media (max-width: 650px ) {
+      body {
+        border-radius: 0;
+      }
+      
     }
     main {
+      margin-top: 2em;
+      padding-top: 2em;
+      padding-bottom: 2em;
+      padding-left: 3em;
+      padding-right: 3em;
     }
-    .date-picker {
+    .date-picker-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 5em;
-      margin-bottom: 5em;
     }
-    #calendar {
+    #date-input-form {
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
     }
+  
   </style>
 </html>
