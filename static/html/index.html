@@ -6,50 +6,121 @@
     <title>Deadline tracker</title>
   </head>
   <body>
-
     <main>
       <div class="date-picker-container">
         <h3>To begin, enter a deadline that stresses you out:</h3>
-        <form id="date-input-form" >
+        <form id="date-input-form">
           <input type="datetime-local" name="deadlineDate" required />
-          <input type="text" name="deadlineTitle" placeholder="Deadline name..." maxlength="20" required/>
+          <input
+            type="text"
+            name="deadlineTitle"
+            placeholder="Deadline name..."
+            maxlength="20"
+            required
+          />
           <button type="submit">Submit</button>
         </form>
       </div>
 
       <div id="countdowns">
-        <h2 id="countdown-header"></h2>
-        <div id="countdown-container">
-
-        </div>
+        <div id="countdown-container"></div>
       </div>
     </main>
+
+    <template id="screen-template">
+      <div class="screen">
+        <h3 class="screen-title"></h3>
+        <p class="screen-counter"></p>
+      </div>
+    </template>
   </body>
+
   <script>
-    const deadlineFormElement = document.getElementById('date-input-form');
+    const deadlineFormElement = document.getElementById("date-input-form");
     deadlineFormElement.addEventListener("submit", handleDeadlineSubmit);
 
-    const deadline = {};
+    const screens = [
+      {
+        type: "text",
+        title: "You've got time...",
+      },
+      {
+        type: "dateTime",
+        dateTime: new Date(new Date().getFullYear() + 1, 0, 1, 0, 1),
+        title: "Time until 2027:",
+      },
+    ];
+
+    const deadline = {
+      type: "dateTime",
+    };
 
     function handleDeadlineSubmit(event) {
       event.preventDefault();
       deadline.dateTime = new Date(event.target.elements.deadlineDate.value);
       deadline.title = event.target.elements.deadlineTitle.value;
-      console.log(deadline);
+      console.log(deadline.dateTime.toISOString());
 
       if (deadline.dateTime.getTime() - Date.now() < 5 * 60 * 1000) {
-        alert('That\'s like, really soon. Please specify a deadline at least 5 minutes into the future');
+        alert(
+          "That's like, really soon. Please specify a deadline at least 5 minutes into the future",
+        );
         return;
       }
+
+      screens.unshift(deadline);
 
       window.scrollTo(0, 0);
       renderTimers();
     }
 
     function renderTimers() {
+      //add css class used to hide date picker and show countdown timers
+      document.body.classList.add("has-deadline");
 
+      const countdownContainerElement = document.getElementById(
+        "countdown-container",
+      );
+
+      const updaterFunctionList = [];
+
+      screens.forEach((screen) => {
+        const { screenElement, updateElement } = createScreen(screen);
+        countdownContainerElement.append(screenElement);
+        updaterFunctionList.push(updateElement);
+      });
+
+      tick(updaterFunctionList);
     }
 
+    function createScreen(item) {
+      const screenElement = document
+        .getElementById("screen-template")
+        .content.firstElementChild.cloneNode(true);
+
+      screenElement.querySelector(".screen-title").textContent = item.title;
+      const counterElement = screenElement.querySelector(".screen-counter")
+      counterElement.text
+
+      if (item.type === "text") {
+        counterElement.remove();
+        return { screenElement, updateElement: () => {} }
+      }
+
+      function updateElement(dateTimeNow) {
+        counterElement.textContent = getTimeBetween(dateTimeNow - item.dateTime);
+      }
+
+      return { screenElement, updateElement }
+    }
+
+    function tick(updaterFunctionList) {
+      updaterFunctionList.forEach((updaterFunction) => updaterFunction(Date.now()));
+    }
+
+    function getTimeBetween(a, b) {
+      return b.toISOString();
+    }
   </script>
 
   <style>
@@ -65,11 +136,11 @@
       margin: 1em auto;
       max-width: 650px;
       min-height: 100dvh;
-      background-color: rgba(248, 235, 227, .6);
+      background-color: rgba(248, 235, 227, 0.45);
       box-shadow: 0px 0px 15px 0px rgb(0, 0, 0, 0.3);
       border-radius: 2em;
     }
-    @media (max-width: 650px ) {
+    @media (max-width: 650px) {
       body {
         border-radius: 0;
       }
@@ -92,11 +163,12 @@
       flex-direction: column;
       gap: 0.5em;
     }
-    #date-input-form input, button {
-      border-radius: .5em;
+    #date-input-form input,
+    button {
+      border-radius: 0.5em;
       border: none;
-      padding-top: .5em;
-      padding-bottom: .5em;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
       padding-left: 1em;
       padding-right: 1em;
     }
@@ -114,7 +186,14 @@
       align-items: center;
       justify-content: center;
     }
-
-  
+    #countdowns {
+      display: none;
+    }
+    body.has-deadline .date-picker-container {
+      display: none;
+    }
+    body.has-deadline #countdowns {
+      display: block;
+    }
   </style>
 </html>
