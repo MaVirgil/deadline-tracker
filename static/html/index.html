@@ -45,9 +45,167 @@
         title: "You've got time...",
       },
       {
+        type: "text",
+        title: "...for some perspective"
+      },
+      {
         type: "dateTime",
         dateTime: new Date(new Date().getFullYear() + 1, 0, 1, 0, 1),
-        title: "Time until 2027:",
+        title: `Time until you enter ${new Date().getFullYear() + 1}:`,
+      },
+      {
+        type: "text",
+        title: "Hopefully that doesn\'t stress you out...",
+      },
+      {
+        type: "text",
+        title: "...if it does then here's something fun to look forward to instead:"
+      },
+      {
+        type: "dateTime",
+        dateTime: new Date(2028, 6, 14, 0, 1),
+        title: "Time until the next Summer Olympic Games",
+      },
+      {
+        type: "text",
+        title: 'Don\'t like sports?'
+      },
+      {
+        type: "text",
+        title: 'Then how about this?'
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(2026, 10, 19, 0, 0),
+        title: 'Time until GTA 6 releases'
+      },
+      {
+        type: 'text',
+        title: 'Better?'
+      },
+      {
+        type: 'text',
+        title: '...nerd.'
+      },
+      {
+        type: 'text',
+        title: 'I hope that reminded you of something to look forward to'
+      },
+      {
+        type: 'text',
+        title: 'Because the relentless passing of time doesn\'t have to be stressful'
+      },
+      {
+        type: 'text',
+        title: 'Think about how many good things are in front of us',
+      },
+      {
+        type: 'text',
+        title: '...and how many bad things are behind us',
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(2023, 4, 5, 0, 0),
+        title: 'Time since WHO declared the Covid-19 pandemic officially over',
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(2002, 4, 30, 12, 0),
+        title: 'Time since the final steel beam from the World Trade Center was removed from Ground Zero'
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(1945, 4, 8, 12, 0),
+        title: 'Time since Germany\'s unconditional surrender, marking the end of WW2 in Europe'
+      },
+      {
+        type: 'text',
+        title: 'Some people say that we should remember the lessons of the past...',
+      },
+      {
+        type: 'text',
+        title: '...or be doomed to repeat them',
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(2045, 0, 1, 0, 0),
+        title: 'Time until no living person will have been alive during World War 2',
+      },
+      {
+        type: 'text',
+        title: 'Hopefully someone writes down the lessons before then...',
+      },
+      {
+        type: 'text',
+        title: 'OK we\'re getting a little off track, back to your deadline',
+      },
+      {
+        type: 'userDeadline',
+      },
+      {
+        type: 'text',
+        title: 'I don\'t know what this deadline means to you...',
+      },
+      {
+        type: 'text',
+        title: '...and I\'m sure there\'s a good reason that you\'re stressed about it...',
+      },
+      {
+        type: 'text',
+        title: '...but there\'s like, infinite momets in time, always moving closer to the present, or further away into the past',
+      },
+      {
+        type: 'text',
+        title: 'Most of these moments are so arbitrary that we don\'t even register them as "moments"...',
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(
+          new Date().getFullYear() + 2,
+          new Date().getMonth(),
+          new Date().getDay(),
+          0, 0,
+        ),
+        title: 'Time until every elevator in denmark will have been inspected at least once'
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(new Date().getFullYear(), 10, 7, 4, 0),
+        title: 'Time until the 12,447,000th cyclist will have passed the Queen Louise bridge in Copenhagen this year',
+      },
+      {
+        type: 'text',
+        title: '...while other moments are given far too much weight...',
+      },
+      {
+        type: 'dateTime',
+        dateTime: new Date(2028, 7, 15, 0, 0),
+        title: 'Time until the creator of this page turns 30'
+      },
+      {
+        type: 'text',
+        title: '...but even the moments that feel the most important today...',
+      },
+      {
+        type: 'text',
+        title: '...will some day be made meaningless by time',
+      },
+      {
+        type: 'deadlineTimeAddition',
+        additionSeconds: 3.629e+9 * 1000,
+        title: 'Time until every person alive when your deadline passes will be dead',
+      },
+      {
+        type: 'text',
+        title: '',
+      },
+      {
+        type: 'text',
+        title: '',
+      },
+      {
+        type: 'text',
+        title: 'That being said, if it\'s like a super important thing for work or uni or something, you should probably just get it done asap idk',
       },
     ];
 
@@ -57,13 +215,15 @@
 
     function handleDeadlineSubmit(event) {
       event.preventDefault();
-      const DEADLINE_MINIMUM_MILISECONDS = 5 * 60 * 1000;
+      const DEADLINE_MINIMUM_MILISECONDS = 60 * 60 * 1000;
       deadline.dateTime = new Date(event.target.elements.deadlineDate.value);
       deadline.title = event.target.elements.deadlineTitle.value;
 
-      if (deadline.dateTime.getTime() - Date.now() < DEADLINE_MINIMUM_MILISECONDS) {
+      if (
+        deadline.dateTime.getTime() - Date.now() < DEADLINE_MINIMUM_MILISECONDS
+      ) {
         alert(
-          "That's really soon. Please submit a deadline more than 5 minutes into the future",
+          "That's really soon. Please submit a deadline more than an hour into the future",
         );
         return;
       }
@@ -99,17 +259,22 @@
         .getElementById("screen-template")
         .content.firstElementChild.cloneNode(true);
 
-      screenElement.querySelector(".screen-title").textContent = item.title;
-      const counterElement = screenElement.querySelector(".screen-counter")
-      counterElement.text
+      let itemToInsert = item.type === 'userDeadline' ? deadline : item;
 
-      if (item.type === "text") {
+      screenElement.querySelector(".screen-title").textContent = itemToInsert.title;
+      const counterElement = screenElement.querySelector(".screen-counter")
+
+      if (itemToInsert.type === "text") {
         counterElement.remove();
         return { screenElement, updateElement: () => {} }
       }
 
+      if (itemToInsert.type === 'deadlineTimeAddition') {
+        itemToInsert.dateTime = new Date(deadline.dateTime.getTime() + itemToInsert.additionSeconds);
+      }
+
       function updateElement(dateTimeNow) {
-        const secondsBetween = getSecondsBetween(dateTimeNow, item.dateTime);
+        const secondsBetween = getSecondsBetween(dateTimeNow, itemToInsert.dateTime);
         counterElement.textContent = formatSeconds(secondsBetween);
       }
 
@@ -117,21 +282,34 @@
     }
 
     function tick(updaterFunctionList) {
-      updaterFunctionList.forEach((updaterFunction) => updaterFunction(new Date()));
-    }
-
-    function getSecondsBetween(dateOne, dateTwo) {
-      const MILISECONDS_PER_SECOND = 1000;
-      return Math.floor(
-        (dateTwo.getTime() - dateOne.getTime()) / MILISECONDS_PER_SECOND
+      updaterFunctionList.forEach(
+        (updaterFunction) => updaterFunction(new Date())
       );
     }
 
+    function getSecondsBetween(dateNow, dateToCompare) {
+      const MILISECONDS_PER_SECOND = 1000;
+      const result = Math.floor(
+        (dateToCompare.getTime() - dateNow.getTime()) / MILISECONDS_PER_SECOND
+      );
+      return Math.abs(result);
+    }
+
     function formatSeconds(timeString) {
+      const SECONDS_PER_MINUTE = 60;
       const MINUTES_PER_HOUR = 60;
-      const hours = Math.floor(timeString / MINUTES_PER_HOUR);
-      const secondsUntilNextHour = Math.floor(timeString % MINUTES_PER_HOUR);
-      return `${hours.toLocaleString()} hours & ${secondsUntilNextHour} seconds`
+      const SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
+
+      const hours = Math.floor(timeString / SECONDS_PER_HOUR);
+      const minutes = Math.floor(
+        (timeString / SECONDS_PER_MINUTE ) % MINUTES_PER_HOUR
+      );
+      const seconds = Math.floor(timeString % SECONDS_PER_MINUTE);
+      return `
+        ${hours.toLocaleString()} hours | 
+        ${minutes.toString().padStart(2, '0')} minutes | 
+        ${seconds.toString().padStart(2, '0')} seconds
+      `;
     }
   </script>
 
