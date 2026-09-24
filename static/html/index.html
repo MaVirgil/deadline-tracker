@@ -33,6 +33,15 @@
         <p class="screen-counter"></p>
       </div>
     </template>
+    <template id="link-container-template">
+      <div class="screen">
+        <div class="link-container">
+          <a href="https://mavirgil.com" target="_blank">Contact</a>
+          <p>|</p>
+          <a href="https://github.com/MaVirgil/deadline-tracker" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </template>
   </body>
 
   <script>
@@ -40,6 +49,9 @@
     deadlineFormElement.addEventListener('submit', handleDeadlineSubmit);
 
     const screens = [
+      {
+        type: 'userDeadline',
+      },
       {
         type: 'text',
         title: "You've got time...",
@@ -212,10 +224,6 @@
         type: 'text',
         title: '',
       },
-      {
-        type: 'text',
-        title: '',
-      },
     ];
 
     const deadline = {
@@ -238,8 +246,6 @@
         return;
       }
 
-      screens.unshift(deadline);
-
       window.scrollTo(0, 0);
       renderTimers();
     }
@@ -259,6 +265,9 @@
         countdownContainerElement.append(screenElement);
         updaterFunctionList.push(updateElement);
       });
+
+      const lastElement = createAboutScreen();
+      countdownContainerElement.append(lastElement);
 
       tick(updaterFunctionList);
       setInterval(() => tick(updaterFunctionList), 1000);
@@ -295,6 +304,16 @@
       }
 
       return { screenElement, updateElement };
+    }
+
+    function createAboutScreen() {
+      const aboutScreenElement = document
+        .getElementById('link-container-template')
+        .content.firstElementChild.cloneNode(true);
+
+      console.log(aboutScreenElement);
+
+      return aboutScreenElement;
     }
 
     function tick(updaterFunctionList) {
@@ -399,8 +418,28 @@
       align-items: center;
       justify-content: center;
     }
+    .screen:last-of-type {
+      justify-content: flex-end;
+    }
+    .link-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: .2em
+    }
+    a {
+      color: rgb(209, 148, 6);
+      
+    }
+    a:visited {
+      color: rgb(189, 134, 7);
+    }
+    a:hover {
+      color: rgb(231, 165, 9);
+    }
     .screen-counter {
-      background-color: rgba(248, 235, 227, 0.45);
+      background-color: rgba(248, 243, 227, 0.45);
       margin: 0;
       padding-top: 1em;
       padding-bottom: 1em;
