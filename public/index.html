@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Deadline tracker</title>
+  </head>
+  <body>
+    <main>
+      <div class="date-picker-container">
+        <h3>To begin, enter a deadline that stresses you out:</h3>
+        <form id="date-input-form">
+          <input type="datetime-local" name="deadlineDate" required />
+          <input
+            type="text"
+            name="deadlineTitle"
+            placeholder="Deadline name..."
+            maxlength="50"
+            required
+          />
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+
+      <div id="countdowns">
+        <div id="countdown-container"></div>
+      </div>
+    </main>
+
+    <template id="screen-template">
+      <div class="screen">
+        <h3 class="screen-title"></h3>
+        <p class="screen-counter"></p>
+      </div>
+    </template>
+    <template id="link-container-template">
+      <div class="screen">
+        <div class="link-container">
+          <a href="https://mavirgil.com" target="_blank">Contact</a>
+          <p>|</p>
+          <a href="https://github.com/MaVirgil/deadline-tracker" target="_blank">GitHub</a>
+        </div>
+      </div>
+    </template>
+  </body>
+  
+  <script type="module" src="main.js" ></script>
+
+  <style>
+    html {
+      background-color: oklch(0.8798 0.0598 132.35);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-blend-mode: color-burn;
+      color: oklch(24.935% 0.0225 41.943);
+      font-family: sans-serif;
+    }
+    body {
+      text-align: center;
+      margin: 1em auto;
+      max-width: 650px;
+      min-height: 100dvh;
+      background-color: rgba(248, 235, 227, 0.45);
+      box-shadow: 0px 0px 15px 0px rgb(0, 0, 0, 0.3);
+      border-radius: 2em;
+    }
+    @media (max-width: 650px) {
+      body {
+        border-radius: 0;
+      }
+    }
+    main {
+      margin-top: 2em;
+      padding-top: 2em;
+      padding-bottom: 2em;
+      padding-left: 3em;
+      padding-right: 3em;
+    }
+    .date-picker-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #date-input-form {
+      width: 250px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+      background-color: rgba(248, 235, 227, 0.45);
+      box-shadow: 0px 0px 15px 0px rgb(0, 0, 0, 0.3);
+      border-radius: 1em;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      padding-left: 2em;
+      padding-right: 2em;
+    }
+    #date-input-form input,
+    button {
+      border-radius: 0.5em;
+      border: none;
+      padding-top: 0.5em;
+      padding-bottom: 0.5em;
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+    #date-input-form button {
+      background-color: rgb(241, 182, 42);
+    }
+    #date-input-form button:hover {
+      cursor: pointer;
+      box-shadow: inset 0px 0px 0px 2px rgb(190, 143, 32);
+    }
+    .screen {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .screen:last-of-type {
+      justify-content: flex-end;
+    }
+    .link-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: row;
+      gap: .2em
+    }
+    a {
+      color: rgb(209, 148, 6);
+      
+    }
+    a:visited {
+      color: rgb(189, 134, 7);
+    }
+    a:hover {
+      color: rgb(231, 165, 9);
+    }
+    .screen-counter {
+      background-color: rgba(248, 243, 227, 0.45);
+      margin: 0;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      padding-left: 2em;
+      padding-right: 2em;
+      border-radius: 1em;
+      font-weight: bolder;
+      box-shadow: 0px 0px 15px 0px rgb(0, 0, 0, 0.3);
+    }
+    #countdowns {
+      display: none;
+    }
+    body.has-deadline .date-picker-container {
+      display: none;
+    }
+    body.has-deadline #countdowns {
+      display: block;
+    }
+  </style>
+</html>
