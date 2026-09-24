@@ -101,6 +101,7 @@ function getSecondsBetween(dateNow, dateToCompare) {
   const result = Math.floor(
     (dateToCompare.getTime() - dateNow.getTime()) / MILISECONDS_PER_SECOND,
   );
+  
   return Math.abs(result);
 }
 
@@ -114,6 +115,7 @@ function formatSeconds(timeString) {
     (timeString / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR,
   );
   const seconds = Math.floor(timeString % SECONDS_PER_MINUTE);
+
   return `
     ${hours.toLocaleString()} hours | 
     ${minutes.toString().padStart(2, '0')} minutes | 
