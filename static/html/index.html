@@ -57,13 +57,13 @@
 
     function handleDeadlineSubmit(event) {
       event.preventDefault();
+      const DEADLINE_MINIMUM_MILISECONDS = 5 * 60 * 1000;
       deadline.dateTime = new Date(event.target.elements.deadlineDate.value);
       deadline.title = event.target.elements.deadlineTitle.value;
-      console.log(deadline.dateTime.toISOString());
 
-      if (deadline.dateTime.getTime() - Date.now() < 5 * 60 * 1000) {
+      if (deadline.dateTime.getTime() - Date.now() < DEADLINE_MINIMUM_MILISECONDS) {
         alert(
-          "That's like, really soon. Please specify a deadline at least 5 minutes into the future",
+          "That's really soon. Please submit a deadline more than 5 minutes into the future",
         );
         return;
       }
@@ -91,6 +91,7 @@
       });
 
       tick(updaterFunctionList);
+      setInterval(() => tick(updaterFunctionList), 1000);
     }
 
     function createScreen(item) {
@@ -108,26 +109,37 @@
       }
 
       function updateElement(dateTimeNow) {
-        counterElement.textContent = getTimeBetween(dateTimeNow, item.dateTime);
+        const secondsBetween = getSecondsBetween(dateTimeNow, item.dateTime);
+        counterElement.textContent = formatSeconds(secondsBetween);
       }
 
       return { screenElement, updateElement }
     }
 
     function tick(updaterFunctionList) {
-      updaterFunctionList.forEach((updaterFunction) => updaterFunction(Date.now()));
+      updaterFunctionList.forEach((updaterFunction) => updaterFunction(new Date()));
     }
 
-    function getTimeBetween(a, b) {
-      return b.toISOString();
+    function getSecondsBetween(dateOne, dateTwo) {
+      const MILISECONDS_PER_SECOND = 1000;
+      return Math.floor(
+        (dateTwo.getTime() - dateOne.getTime()) / MILISECONDS_PER_SECOND
+      );
+    }
+
+    function formatSeconds(timeString) {
+      const MINUTES_PER_HOUR = 60;
+      const hours = Math.floor(timeString / MINUTES_PER_HOUR);
+      const secondsUntilNextHour = Math.floor(timeString % MINUTES_PER_HOUR);
+      return `${hours.toLocaleString()} hours & ${secondsUntilNextHour} seconds`
     }
   </script>
 
   <style>
     html {
       background-color: oklch(0.8798 0.0598 132.35);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
-      background-blend-mode: luminosity;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-blend-mode: color-burn;
       color: oklch(24.935% 0.0225 41.943);
       font-family: sans-serif;
     }
