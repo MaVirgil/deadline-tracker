@@ -165,6 +165,9 @@ export const screens = [
     title: '...will someday be made meaningless by time',
   },
   {
+    type: 'userDeadline',
+  },
+  {
     type: 'deadlineTimeAddition',
     additionSeconds: 3.629e9 * 1000,
     title:
