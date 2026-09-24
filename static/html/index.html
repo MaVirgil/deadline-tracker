@@ -108,7 +108,7 @@
       }
 
       function updateElement(dateTimeNow) {
-        counterElement.textContent = getTimeBetween(dateTimeNow - item.dateTime);
+        counterElement.textContent = getTimeBetween(dateTimeNow, item.dateTime);
       }
 
       return { screenElement, updateElement }
@@ -162,6 +162,13 @@
       display: flex;
       flex-direction: column;
       gap: 0.5em;
+      background-color: rgba(248, 235, 227, 0.45);
+      box-shadow: 0px 0px 15px 0px rgb(0, 0, 0, 0.3);
+      border-radius: 1em;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      padding-left: 2em;
+      padding-right: 2em;
     }
     #date-input-form input,
     button {
@@ -185,6 +192,17 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+    .screen-counter {
+      background-color: rgba(248, 235, 227, 0.45);
+      margin: 0;
+      padding-top: 1em;
+      padding-bottom: 1em;
+      padding-left: 2em;
+      padding-right: 2em;
+      border-radius: 1em;
+      font-weight: bolder;
+      box-shadow: 0px 0px 15px 0px rgb(0, 0, 0, 0.3);
     }
     #countdowns {
       display: none;
