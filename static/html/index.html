@@ -36,64 +36,66 @@
   </body>
 
   <script>
-    const deadlineFormElement = document.getElementById("date-input-form");
-    deadlineFormElement.addEventListener("submit", handleDeadlineSubmit);
+    const deadlineFormElement = document.getElementById('date-input-form');
+    deadlineFormElement.addEventListener('submit', handleDeadlineSubmit);
 
     const screens = [
       {
-        type: "text",
+        type: 'text',
         title: "You've got time...",
       },
       {
-        type: "text",
-        title: "...for some perspective"
+        type: 'text',
+        title: '...for some perspective',
       },
       {
-        type: "dateTime",
+        type: 'dateTime',
         dateTime: new Date(new Date().getFullYear() + 1, 0, 1, 0, 1),
         title: `Time until you enter ${new Date().getFullYear() + 1}:`,
       },
       {
-        type: "text",
+        type: 'text',
         title: "Hopefully that doesn\'t stress you out...",
       },
       {
-        type: "text",
-        title: "...if it does then here's something fun to look forward to instead:"
+        type: 'text',
+        title:
+          "...if it does then here's something fun to look forward to instead:",
       },
       {
-        type: "dateTime",
+        type: 'dateTime',
         dateTime: new Date(2028, 6, 14, 0, 1),
-        title: "Time until the next Summer Olympic Games:",
+        title: 'Time until the next Summer Olympic Games:',
       },
       {
-        type: "text",
-        title: 'Don\'t like sports?'
+        type: 'text',
+        title: "Don't like sports?",
       },
       {
-        type: "text",
-        title: 'Then how about this?'
+        type: 'text',
+        title: 'Then how about this?',
       },
       {
         type: 'dateTime',
         dateTime: new Date(2026, 10, 19, 0, 0),
-        title: 'Time until GTA 6 is released:'
+        title: 'Time until GTA 6 is released:',
       },
       {
         type: 'text',
-        title: 'Better?'
+        title: 'Better?',
       },
       {
         type: 'text',
-        title: '...nerd.'
+        title: '...nerd.',
       },
       {
         type: 'text',
-        title: 'I hope that reminded you of something to look forward to'
+        title: 'I hope that reminded you of something to look forward to',
       },
       {
         type: 'text',
-        title: 'Because the relentless passing of time doesn\'t have to be stressful'
+        title:
+          "Because the relentless passing of time doesn't have to be stressful",
       },
       {
         type: 'text',
@@ -106,21 +108,25 @@
       {
         type: 'dateTime',
         dateTime: new Date(2023, 4, 5, 0, 0),
-        title: 'Time since the WHO declared the Covid-19 pandemic officially over:',
+        title:
+          'Time since the WHO declared the Covid-19 pandemic officially over:',
       },
       {
         type: 'dateTime',
         dateTime: new Date(2002, 4, 30, 12, 0),
-        title: 'Time since the final steel beam from the World Trade Center was removed from Ground Zero:'
+        title:
+          'Time since the final steel beam from the World Trade Center was removed from Ground Zero:',
       },
       {
         type: 'dateTime',
         dateTime: new Date(1945, 4, 8, 12, 0),
-        title: 'Time since Germany\'s unconditional surrender, marking the end of World Waw 2 in Europe:'
+        title:
+          "Time since Germany's unconditional surrender, marking the end of World Waw 2 in Europe:",
       },
       {
         type: 'text',
-        title: 'Some people say that we should remember the lessons of the past...',
+        title:
+          'Some people say that we should remember the lessons of the past...',
       },
       {
         type: 'text',
@@ -137,26 +143,29 @@
       },
       {
         type: 'text',
-        title: 'OK we\'re getting a little off track, back to your deadline',
+        title: "OK we're getting a little off track, back to your deadline",
       },
       {
         type: 'userDeadline',
       },
       {
         type: 'text',
-        title: 'I don\'t know what this deadline means to you...',
+        title: "I don't know what this deadline means to you...",
       },
       {
         type: 'text',
-        title: '...and I\'m sure there\'s a good reason if you\'re stressed about it...',
+        title:
+          "...and I'm sure there's a good reason if you're stressed about it...",
       },
       {
         type: 'text',
-        title: '...but there are, like, infinite moments in time, always moving closer to the present, or further away into the past',
+        title:
+          '...but there are, like, infinite moments in time, always moving closer to the present, or further away into the past',
       },
       {
         type: 'text',
-        title: 'Most of these moments are so arbitrary that we don\'t even register them as "moments"...',
+        title:
+          'Most of these moments are so arbitrary that we don\'t even register them as "moments"...',
       },
       {
         type: 'dateTime',
@@ -164,14 +173,17 @@
           new Date().getFullYear() + 2,
           new Date().getMonth(),
           new Date().getDate(),
-          0, 0,
+          0,
+          0,
         ),
-        title: 'Time until every currently operating elevator in Denmark will have undergone a routine inspection:'
+        title:
+          'Time until every currently operating elevator in Denmark will have undergone a routine inspection:',
       },
       {
         type: 'dateTime',
         dateTime: new Date(new Date().getFullYear(), 10, 7, 4, 0),
-        title: 'Time until the 12,447,000th cyclist will have passed the Queen Louise Bridge in Copenhagen this year:',
+        title:
+          'Time until the 12,447,000th cyclist will have passed the Queen Louise Bridge in Copenhagen this year:',
       },
       {
         type: 'text',
@@ -180,7 +192,7 @@
       {
         type: 'dateTime',
         dateTime: new Date(2028, 7, 15, 0, 0),
-        title: 'Time until the creator of this page turns 30:'
+        title: 'Time until the creator of this page turns 30:',
       },
       {
         type: 'text',
@@ -192,8 +204,9 @@
       },
       {
         type: 'deadlineTimeAddition',
-        additionSeconds: 3.629e+9 * 1000,
-        title: 'Time until everyone who is alive when your deadline passes will be dead:',
+        additionSeconds: 3.629e9 * 1000,
+        title:
+          'Time until everyone who is alive when your deadline passes will be dead:',
       },
       {
         type: 'text',
@@ -206,7 +219,7 @@
     ];
 
     const deadline = {
-      type: "dateTime",
+      type: 'dateTime',
     };
 
     function handleDeadlineSubmit(event) {
@@ -216,7 +229,8 @@
       deadline.title = event.target.elements.deadlineTitle.value;
 
       if (
-        deadline.dateTime.getTime() - Date.now() < DEADLINE_MINIMUM_MILISECONDS
+        deadline.dateTime.getTime() - Date.now() <
+        DEADLINE_MINIMUM_MILISECONDS
       ) {
         alert(
           "That's really soon. Please submit a deadline more than an hour into the future",
@@ -232,10 +246,10 @@
 
     function renderTimers() {
       //add css class used to hide date picker and show countdown timers
-      document.body.classList.add("has-deadline");
+      document.body.classList.add('has-deadline');
 
       const countdownContainerElement = document.getElementById(
-        "countdown-container",
+        'countdown-container',
       );
 
       const updaterFunctionList = [];
@@ -252,41 +266,47 @@
 
     function createScreen(item) {
       const screenElement = document
-        .getElementById("screen-template")
+        .getElementById('screen-template')
         .content.firstElementChild.cloneNode(true);
 
       let itemToInsert = item.type === 'userDeadline' ? deadline : item;
 
-      screenElement.querySelector(".screen-title").textContent = itemToInsert.title;
-      const counterElement = screenElement.querySelector(".screen-counter")
+      screenElement.querySelector('.screen-title').textContent =
+        itemToInsert.title;
+      const counterElement = screenElement.querySelector('.screen-counter');
 
-      if (itemToInsert.type === "text") {
+      if (itemToInsert.type === 'text') {
         counterElement.remove();
-        return { screenElement, updateElement: () => {} }
+        return { screenElement, updateElement: () => {} };
       }
 
       if (itemToInsert.type === 'deadlineTimeAddition') {
-        itemToInsert.dateTime = new Date(deadline.dateTime.getTime() + itemToInsert.additionSeconds);
+        itemToInsert.dateTime = new Date(
+          deadline.dateTime.getTime() + itemToInsert.additionSeconds,
+        );
       }
 
       function updateElement(dateTimeNow) {
-        const secondsBetween = getSecondsBetween(dateTimeNow, itemToInsert.dateTime);
+        const secondsBetween = getSecondsBetween(
+          dateTimeNow,
+          itemToInsert.dateTime,
+        );
         counterElement.textContent = formatSeconds(secondsBetween);
       }
 
-      return { screenElement, updateElement }
+      return { screenElement, updateElement };
     }
 
     function tick(updaterFunctionList) {
-      updaterFunctionList.forEach(
-        (updaterFunction) => updaterFunction(new Date())
+      updaterFunctionList.forEach((updaterFunction) =>
+        updaterFunction(new Date()),
       );
     }
 
     function getSecondsBetween(dateNow, dateToCompare) {
       const MILISECONDS_PER_SECOND = 1000;
       const result = Math.floor(
-        (dateToCompare.getTime() - dateNow.getTime()) / MILISECONDS_PER_SECOND
+        (dateToCompare.getTime() - dateNow.getTime()) / MILISECONDS_PER_SECOND,
       );
       return Math.abs(result);
     }
@@ -298,7 +318,7 @@
 
       const hours = Math.floor(timeString / SECONDS_PER_HOUR);
       const minutes = Math.floor(
-        (timeString / SECONDS_PER_MINUTE ) % MINUTES_PER_HOUR
+        (timeString / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR,
       );
       const seconds = Math.floor(timeString % SECONDS_PER_MINUTE);
       return `
